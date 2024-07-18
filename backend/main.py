@@ -56,14 +56,14 @@ def create_user(db: Session, user: UserCreate):
     db_user = User(username=user.username, hashed_password=hashed_password)
     db.add(db_user)
     db.commit()
-    return "complete"
+    return "complété"
 
 
 @app.post("/register")
 def register_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = get_user_by_username(db, username=user.username)
     if db_user:
-        raise HTTPException(status_code=400, detail="Username already registered")
+        raise HTTPException(status_code=400, detail="Username existe déjà")
     return create_user(db=db, user=user)
 
 
@@ -95,7 +95,7 @@ def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db:
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Incorrect username or password",
+            detail="Incorrect username ou password",
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
@@ -109,11 +109,11 @@ def verify_token(token: str = Depends(oauth2_scheme)):
     payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
     username: str = payload.get("sub")
     if username is None:
-        raise HTTPException(status_code=403, detail="Token is invalid or expired")
+        raise HTTPException(status_code=403, detail="Token invalide ou expiré")
     return payload
 
 
 @app.get("/verify-token/{token}")
 async def verify_user_token(token: str):
     verify_token(token=token)
-    return {"message": "Token is valid"}
+    return {"message": "Token valide"}

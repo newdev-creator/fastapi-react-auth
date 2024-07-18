@@ -14,7 +14,7 @@ function ProtectedPage() {
         );
 
         if (!response.ok) {
-          throw new Error("Token verification failed");
+          throw new Error("Echec de la vérification du Token");
         }
       } catch (error) {
         localStorage.removeItem("token");

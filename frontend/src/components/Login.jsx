@@ -11,7 +11,7 @@ function Login() {
 
   const validateForm = () => {
     if (!username || !password) {
-      setError("Username and password are required");
+      setError("Username et password sont requis");
       return false;
     }
     setError("");
@@ -44,11 +44,11 @@ function Login() {
         navigate("/protected");
       } else {
         const errorData = await response.json();
-        setError(errorData.detail || "Authentication failed!");
+        setError(errorData.detail || "Echec de l'authentification!");
       }
     } catch (error) {
       setLoading(false);
-      setError("An error occurred. Please try again later.");
+      setError("Une erreur est survenue. Veuillez réessayer plus tard.");
     }
   };
 
@@ -72,7 +72,7 @@ function Login() {
           />
         </div>
         <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Connection..." : "Valider"}
         </button>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
