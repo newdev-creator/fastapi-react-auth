@@ -40,8 +40,9 @@ def get_db():
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-
-SECRET_KEY = "d49a37b5680afb761571a960e98388c22c3e57c6d4586a3f7769a41396388447"
+# to get a string like this run:
+# openssl rand -hex 32
+SECRET_KEY = "your secret key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
